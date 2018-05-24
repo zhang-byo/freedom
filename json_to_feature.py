@@ -100,31 +100,46 @@ def get_all_input_file(input_dir):
 def main(in_dir, out_dir):
     ensure_dir(out_dir)
     for file in get_all_input_file(in_dir):
+        filename = os.path.basename(file)
         # 文件名为去除 .json 后缀的名字
-        filename = re.split(r"\.", os.path.basename(file))[0]
+        if ".json" == filename[-5:]:
+            filename = filename[:-5]
         # 读取 JSON 文件得到的是一个字典列表
         data, ok = read_json(file)
-        if ok:
+        if ok and isinstance(data, list):
             for i, item in enumerate(data):
                 result = handle_dict(item)
                 write_to_pkl(result, out_dir, filename + "_" + str(i))
                 output_file = out_dir + os.path.sep + filename + "_" + str(i)
                 logger.info("done-> " + output_file)
         else:
-            logger.error("main error->", "读取json", data)
+            logger.error("main error-> 读取json: " + str(data))
 
 
-def test():
-    with open("result/shareport1_13", "rb+") as f:
+def test_json():
+    """
+    测试作为输入的 json 文件
+    :return:
+    """
+    main("dataset", "result")
+
+
+def test_pkl():
+    """
+    测试序列化后的 pkl 文件 是否可以被反序列化得到正确格式的结果
+    :return: numpy.ndarray ,数据shape为 (n, n+8)
+    """
+    with open("result/shareport1_12", "rb+") as f:
         ans = pickle.load(f)
         print(type(ans))
         print(ans.shape)
         print(ans)
+        return ans
 
 
 if __name__ == "__main__":
-    # 测试反序列化结果,得到 numpy.ndarray ,数据shape为 (n, n+8)
-    # test()
+    # test_json()
+    # test_pkl()
 
     if len(sys.argv) < 3:
         print("参数1:", "输入文件夹路径(保存特征数据的json目录)", "参数2:", "保存文件路径")
