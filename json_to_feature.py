@@ -99,21 +99,28 @@ def get_all_input_file(input_dir):
 
 def main(in_dir, out_dir):
     ensure_dir(out_dir)
+    mydict = dict()
     for file in get_all_input_file(in_dir):
         filename = os.path.basename(file)
+        dirname = re.split(r"/", os.path.dirname(file))[-1]
         # 文件名为去除 .json 后缀的名字
         if ".json" == filename[-5:]:
             filename = filename[:-5]
         # 读取 JSON 文件得到的是一个字典列表
         data, ok = read_json(file)
         if ok and isinstance(data, list):
+            data_len = len(data)
             for i, item in enumerate(data):
                 result = handle_dict(item)
-                write_to_pkl(result, out_dir, filename + "_" + str(i))
-                output_file = out_dir + os.path.sep + filename + "_" + str(i)
+                write_to_pkl(result, out_dir, filename + "_" + str(i) + "_" + str(data_len))
+                output_file = out_dir + os.path.sep + filename + "_" + str(i) + "_" + str(data_len)
                 logger.info("done-> " + output_file)
+            mydict[str(dirname + os.path.sep + filename).strip()] = data_len
         else:
             logger.error("main error-> 读取json: " + str(data))
+    # 保存基本块数量信息到 info.json 文件
+    write_json(mydict, out_dir + os.path.sep + "info.json")
+    logger.info("write json->" + out_dir + os.path.sep + "info.json")
 
 
 def test_json():
@@ -129,7 +136,7 @@ def test_pkl():
     测试序列化后的 pkl 文件 是否可以被反序列化得到正确格式的结果
     :return: numpy.ndarray ,数据shape为 (n, n+8)
     """
-    with open("result/shareport1_12", "rb+") as f:
+    with open("result/shareport1_12_127", "rb+") as f:
         ans = pickle.load(f)
         print(type(ans))
         print(ans.shape)
