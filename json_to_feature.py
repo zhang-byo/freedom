@@ -114,13 +114,14 @@ def main(in_dir, out_dir):
                 result = handle_dict(item)
                 write_to_pkl(result, out_dir, filename + "_" + str(i) + "_" + str(data_len))
                 output_file = out_dir + os.path.sep + filename + "_" + str(i) + "_" + str(data_len)
-                logger.info("done-> " + output_file)
+                # logger.info("done-> " + output_file)
             mydict[str(dirname + os.path.sep + filename).strip()] = data_len
         else:
-            logger.error("main error-> 读取json: " + str(data))
+            # logger.error("main error-> 读取json: " + str(data))
+            pass
     # 保存基本块数量信息到 info.json 文件
     write_json(mydict, out_dir + os.path.sep + "info.json")
-    logger.info("write json->" + out_dir + os.path.sep + "info.json")
+    # logger.info("write json->" + out_dir + os.path.sep + "info.json")
 
 
 def test_json():
