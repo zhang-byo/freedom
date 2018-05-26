@@ -56,3 +56,16 @@ def read_json(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
         return data, True
+
+
+def write_json(content, filepath):
+    """
+    写入数据到 JSON 文件，返回文件的路径
+    :param content: 写入到 json 文件中的内容
+    :param filepath: json文件路径
+    :return: 文件路径
+    """
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(content, f)
+        return filepath, True
+    return None, False
