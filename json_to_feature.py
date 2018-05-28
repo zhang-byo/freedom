@@ -34,7 +34,7 @@ def handle_dict(data):
             # 对角线元素初始为 1
             adj_matrix[n][n] = 1
             adj_matrix[n].extend(handle_dict_value(data[k]))
-    return np.array(adj_matrix, dtype=np.float)
+    return np.array(adj_matrix, dtype=np.float), func_name
 
 
 def handle_dict_value(value):
@@ -111,17 +111,17 @@ def main(in_dir, out_dir):
         if ok and isinstance(data, list):
             data_len = len(data)
             for i, item in enumerate(data):
-                result = handle_dict(item)
-                write_to_pkl(result, out_dir, filename + "_" + str(i) + "_" + str(data_len))
-                output_file = out_dir + os.path.sep + filename + "_" + str(i) + "_" + str(data_len)
-                # logger.info("done-> " + output_file)
+                result, function_name = handle_dict(item)
+                write_to_pkl(result, out_dir, filename + "!" + function_name)
+                output_file = out_dir + os.path.sep + filename + "!" + function_name
+                logger.info("done-> " + output_file)
             mydict[str(dirname + os.path.sep + filename).strip()] = data_len
         else:
-            # logger.error("main error-> 读取json: " + str(data))
+            logger.error("main error-> 读取json: " + str(data))
             pass
     # 保存基本块数量信息到 info.json 文件
     write_json(mydict, out_dir + os.path.sep + "info.json")
-    # logger.info("write json->" + out_dir + os.path.sep + "info.json")
+    logger.info("write json->" + out_dir + os.path.sep + "info.json")
 
 
 def test_json():
@@ -146,17 +146,17 @@ def test_pkl():
 
 
 if __name__ == "__main__":
-    # test_json()
+    test_json()
     # test_pkl()
 
-    if len(sys.argv) < 3:
-        print("参数1:", "输入文件夹路径(保存特征数据的json目录)", "参数2:", "保存文件路径")
-        exit(-1)
-
-    try:
-        main(sys.argv[1], sys.argv[2])
-        print("所有任务完成.")
-    except Exception as e:
-        print("运行脚本出现异常:", e)
-    finally:
-        print("程序停止！")
+    # if len(sys.argv) < 3:
+    #     print("参数1:", "输入文件夹路径(保存特征数据的json目录)", "参数2:", "保存文件路径")
+    #     exit(-1)
+    #
+    # try:
+    #     main(sys.argv[1], sys.argv[2])
+    #     print("所有任务完成.")
+    # except Exception as e:
+    #     print("运行脚本出现异常:", e)
+    # finally:
+    #     print("程序停止！")
