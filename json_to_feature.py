@@ -146,17 +146,17 @@ def test_pkl():
 
 
 if __name__ == "__main__":
-    test_json()
+    # test_json()
     # test_pkl()
 
-    # if len(sys.argv) < 3:
-    #     print("参数1:", "输入文件夹路径(保存特征数据的json目录)", "参数2:", "保存文件路径")
-    #     exit(-1)
-    #
-    # try:
-    #     main(sys.argv[1], sys.argv[2])
-    #     print("所有任务完成.")
-    # except Exception as e:
-    #     print("运行脚本出现异常:", e)
-    # finally:
-    #     print("程序停止！")
+    if len(sys.argv) < 3:
+        print("参数1:", "输入文件夹路径(保存特征数据的json目录)", "参数2:", "保存文件路径")
+        exit(-1)
+
+    try:
+        main(sys.argv[1], sys.argv[2])
+        print("所有任务完成.")
+    except Exception as e:
+        print("运行脚本出现异常:", e)
+    finally:
+        print("程序停止！")
