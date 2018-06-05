@@ -117,7 +117,7 @@ def handle_json(in_dir, out_dir):
     """
     for item in get_all_in_dir(in_dir):
         if os.path.isdir(item):
-            handle_json(item, out_dir + os.path.sep + item)
+            handle_json(item, out_dir + os.path.sep + os.path.basename(item))
         else:
             filename = os.path.basename(item)
             # 读取 JSON 文件得到的是一个字典列表
