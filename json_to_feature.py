@@ -97,6 +97,41 @@ def get_all_input_file(input_dir):
     return []
 
 
+def get_all_in_dir(input_dir):
+    """
+    获取输入文件夹下的所有实体
+    :param input_dir: 输入文件夹路径
+    :return: 该文件夹下的所有实体
+    """
+    if os.path.isdir(input_dir):
+        all_item = [input_dir + os.path.sep + f.strip() for f in os.listdir(input_dir)]
+        return all_item
+
+
+def handle_json(in_dir, out_dir):
+    """
+    采用递归的方式处理多级目录下的 json 文件
+    :param in_dir: 输入目录
+    :param out_dir: 输出路径
+    :return:
+    """
+    for item in get_all_in_dir(in_dir):
+        if os.path.isdir(item):
+            handle_json(item, out_dir + os.path.sep + item)
+        else:
+            filename = os.path.basename(item)
+            # 读取 JSON 文件得到的是一个字典列表
+            data, ok = read_json(item)
+            if ok and isinstance(data, list):
+                for i, item2 in enumerate(data):
+                    result, function_name = handle_dict(item2)
+                    write_to_pkl(result, out_dir, filename + "!" + function_name)
+                    output_file = out_dir + os.path.sep + filename + "!" + function_name
+                    logger.info("done-> " + output_file)
+            else:
+                logger.error("main error-> 读取json: " + str(data))
+
+
 def main(in_dir, out_dir):
     ensure_dir(out_dir)
     mydict = dict()
@@ -154,7 +189,8 @@ if __name__ == "__main__":
         exit(-1)
 
     try:
-        main(sys.argv[1], sys.argv[2])
+        handle_json(sys.argv[1], sys.argv[2])
+        # main(sys.argv[1], sys.argv[2])
         print("所有任务完成.")
     except Exception as e:
         print("运行脚本出现异常:", e)
