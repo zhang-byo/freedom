@@ -34,3 +34,4 @@ if __name__ == "__main__":
         print("参数1： 二进制程序路径 参数2：i64 文件保存路径")
         exit(1)
     main(sys.argv[1], sys.argv[2])
+    print("done.")
