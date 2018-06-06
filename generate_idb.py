@@ -25,7 +25,6 @@ def main(input_file, output_file, ida_start=IDA_START, ida_engine_path=IDA_ENGIN
     if os.path.isfile(input_file):
         try:
             generate_i64(input_file, output_file, ida_start, ida_engine_path)
-            logging.info(ida_start)
         except Exception as e:
             logging.error("生成i64文件出错->" + e)
 
