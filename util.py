@@ -5,7 +5,7 @@ import json
 import logging, logging.handlers
 
 IDA_ENGINE_PATH = "/usr/local/ida/idal64"
-IDA_START = "shell/ida_start.sh"
+IDA_START = os.getcwd() + os.path.sep + "shell/ida_start.sh"
 
 # 程序运行日志文件
 log_dir = "./"
