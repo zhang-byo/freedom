@@ -164,7 +164,8 @@ def test_json():
     测试作为输入的 json 文件
     :return:
     """
-    main("dataset", "result")
+    # main("dataset/json/", "result")
+    handle_json("dataset/json/", "result")
 
 
 def test_pkl():
@@ -190,9 +191,9 @@ if __name__ == "__main__":
 
     try:
         handle_json(sys.argv[1], sys.argv[2])
-        # main(sys.argv[1], sys.argv[2])
+        main(sys.argv[1], sys.argv[2])
         print("所有任务完成.")
     except Exception as e:
-        print("运行脚本出现异常:", e)
+        print("运行脚本出现异常:", e.with_traceback())
     finally:
         print("程序停止！")
