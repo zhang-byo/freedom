@@ -121,7 +121,11 @@ def handle_json(in_dir, out_dir):
         else:
             filename = os.path.basename(item)
             # 读取 JSON 文件得到的是一个字典列表
-            data, ok = read_json(item)
+            try:
+                data, ok = read_json(item)
+            except Exception as ex:
+                print("读取json文件except->", item, ex)
+                continue
             if ok and isinstance(data, list):
                 for i, item2 in enumerate(data):
                     result, function_name = handle_dict(item2)
@@ -164,8 +168,7 @@ def test_json():
     测试作为输入的 json 文件
     :return:
     """
-    # main("dataset/json/", "result")
-    handle_json("dataset/json/", "result")
+    main("dataset/json/", "result")
 
 
 def test_pkl():
@@ -194,6 +197,6 @@ if __name__ == "__main__":
         main(sys.argv[1], sys.argv[2])
         print("所有任务完成.")
     except Exception as e:
-        print("运行脚本出现异常:", e.with_traceback())
+        print("运行脚本出现异常:", e)
     finally:
         print("程序停止！")
