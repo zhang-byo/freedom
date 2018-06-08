@@ -130,5 +130,5 @@ if __name__ == "__main__":
         print("从pkl文件列表生成正负样本标签对")
         print("参数1: 文件列表文件路径 参数2: 结果保存目录")
         exit(1)
-    main(sys.argv[0], sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
     print("done.")
