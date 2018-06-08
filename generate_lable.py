@@ -82,19 +82,19 @@ def shuffle_all_lable(p, n):
 def main(input_file, output_dir):
     ensure_dir(output_dir)
     # 正样本
-    positive_number = 0
+    positive_number = 126351421
     with open(input_file, "r", encoding="utf-8") as f:
         all_pkl_list = f.readlines()
         # 正样本标签保存路径
         p_file = output_dir + os.path.sep + positive_file
-        if file_exist(p_file):
-            os.remove(p_file)
-        with open(p_file, "w+", encoding="utf-8") as pf:
-            for line in all_pkl_list:
-                one_sample = generate_positive(line)
-                pf.writelines(one_sample)
-                positive_number += 25
-            print("正样本数量为:", positive_number)
+        # if file_exist(p_file):
+        #     os.remove(p_file)
+        # with open(p_file, "w+", encoding="utf-8") as pf:
+        #     for line in all_pkl_list:
+        #         one_sample = generate_positive(line)
+        #         pf.writelines(one_sample)
+        #         positive_number += 25
+        #     print("正样本数量为:", positive_number)
         # 负样本
         negative_number = 0
         # 负样本标签保存路径
