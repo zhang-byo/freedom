@@ -129,8 +129,8 @@ def handle_json(in_dir, out_dir):
             if ok and isinstance(data, list):
                 for i, item2 in enumerate(data):
                     result, function_name = handle_dict(item2)
-                    write_to_pkl(result, out_dir, filename + "!" + function_name)
-                    output_file = out_dir + os.path.sep + filename + "!" + function_name
+                    write_to_pkl(result, out_dir, filename + "+" + function_name)
+                    output_file = out_dir + os.path.sep + filename + "+" + function_name
                     logger.info("done-> " + output_file)
             else:
                 logger.error("main error-> 读取json: " + str(data))
