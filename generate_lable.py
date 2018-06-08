@@ -47,6 +47,8 @@ def generate_positive(one_line):
                     one_result = one_line + " " + right_part + " 1\n"
                     result.append(one_result)
                     print("正样本done->", one_result.strip(), end="")
+                else:
+                    print("not exist->~/disk/hdd_2/iie/dataset" + os.path.sep + right_part)
     return result
 
 
