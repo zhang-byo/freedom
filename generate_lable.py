@@ -89,7 +89,7 @@ def main(input_file, output_dir):
             os.remove(p_file)
         with open(p_file, "w+", encoding="utf-8") as pf:
             for line in all_pkl_list:
-                one_sample, ok = generate_positive(line)
+                one_sample = generate_positive(line)
                 pf.writelines(one_sample)
                 positive_number += 1
             print("正样本数量为:", positive_number * 25)
