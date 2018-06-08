@@ -93,8 +93,8 @@ def main(input_file, output_dir):
             for line in all_pkl_list:
                 one_sample = generate_positive(line)
                 pf.writelines(one_sample)
-                positive_number += 1
-            print("正样本数量为:", positive_number * 25)
+                positive_number += 25
+            print("正样本数量为:", positive_number)
         # 负样本
         negative_number = 0
         # 负样本标签保存路径
@@ -114,7 +114,7 @@ def main(input_file, output_dir):
                     print("负样本done->", one_sample, end="")
             print("负样本数量为:", negative_number)
     # 正负样本标签对无序混合
-    with open(output_dir + os.path.sep + "lables") as f:
+    with open(output_dir + os.path.sep + "lables", "w", encoding="utf-8") as f:
         p_result = read_list(p_file)
         n_result = read_list(n_file)
         all_lables = shuffle_all_lable(p_result, n_result)
