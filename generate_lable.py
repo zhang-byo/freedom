@@ -43,7 +43,7 @@ def generate_positive(one_line):
         for platform in PLATFORM:
             for option in OPTION:
                 right_part = "pkl/" + platform + "/" + option + text.strip()
-                if is_pkl_exists("~/disk/hdd_2/iie/dataset", right_part):
+                if is_pkl_exists("/home/ubuntu/disk/hdd_2/iie/dataset", right_part):
                     one_result = one_line + " " + right_part + " 1\n"
                     result.append(one_result)
                     print("正样本done->", one_result.strip(), end="")
