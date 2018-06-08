@@ -42,10 +42,11 @@ def generate_positive(one_line):
         text = one_line[idx:]
         for platform in PLATFORM:
             for option in OPTION:
-                right_part = "pkl/" + platform + "/" + option + text + " 1\n"
+                right_part = "pkl/" + platform + "/" + option + text.strip()
                 if is_pkl_exists("~/disk/hdd_2/iie/dataset", right_part):
-                    one_result = one_line + " " + right_part
+                    one_result = one_line + " " + right_part + " 1\n"
                     result.append(one_result)
+                    print("正样本done->", one_result.strip(), end="")
     return result
 
 
@@ -88,10 +89,9 @@ def main(input_file, output_dir):
             os.remove(p_file)
         with open(p_file, "w+", encoding="utf-8") as pf:
             for line in all_pkl_list:
-                one_sample = generate_positive(line)
+                one_sample, ok = generate_positive(line)
                 pf.writelines(one_sample)
                 positive_number += 1
-                print("done->", line.strip())
             print("正样本数量为:", positive_number * 25)
         # 负样本
         negative_number = 0
@@ -109,7 +109,7 @@ def main(input_file, output_dir):
                     one_sample = all_pkl_list[left_id].strip() + " " + all_pkl_list[right_id].strip() + " 0\n"
                     negative_number += 1
                     nf.write(one_sample)
-                    print("done->", one_sample)
+                    print("负样本done->", one_sample, end="")
             print("负样本数量为:", negative_number)
     # 正负样本标签对无序混合
     with open(output_dir + os.path.sep + "lables") as f:
