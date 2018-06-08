@@ -3,6 +3,7 @@
 import os
 import json
 import logging, logging.handlers
+import random
 
 IDA_ENGINE_PATH = "/usr/local/ida/idal64"
 IDA_START = os.path.dirname(__file__) + os.path.sep + "shell/ida_start.sh"
@@ -74,6 +75,12 @@ def write_json(content, filepath):
     return None, False
 
 
+def read_list(file):
+    if file_exist(file):
+        with open(file, "r", encoding="utf-8") as f:
+            return f.readlines()
+
+
 def generate_i64(binary_path, idb_store_path, ida_start=IDA_START, ida_engine_path=IDA_ENGINE_PATH):
     """
     生成二进制程序的 i64 文件并保存到指定目录(i64文件名可同时指定, 未指定则与二进制程序同名)
@@ -94,3 +101,13 @@ def generate_i64(binary_path, idb_store_path, ida_start=IDA_START, ida_engine_pa
             return idb_store_path
         else:
             return idb_store_path + ".i64"
+
+
+def get_random_int(a=0, b=100):
+    """
+    生成随机整数
+    :param a: 下限
+    :param b: 上限
+    :return: [a, b]范围中的随机整数
+    """
+    return random.randint(a, b)
