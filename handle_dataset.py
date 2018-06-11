@@ -4,6 +4,7 @@ import sys
 import pickle as pkl
 import numpy as np
 from util import *
+from multiprocessing import Pool
 
 # 路径前缀
 pre_path = "/home/ubuntu/disk/hdd_2/iie/dataset/"
@@ -45,16 +46,24 @@ def write_pkl(content, file_path):
         return False
 
 
+def handle_dataset(line):
+    new_pkl = handle_line(line)
+    if write_pkl(new_pkl, line):
+        print("done->", line)
+    else:
+        print("error->", line)
+
+
 def main(input_file):
     if file_exist(input_file):
+        p = Pool(processes=64)
         with open(input_file, "r", encoding="utf-8") as f:
             for line in f:
                 line = pre_path + line.strip()
-                new_pkl = handle_line(line)
-                if write_pkl(new_pkl, line):
-                    print("done->", line)
-                else:
-                    print("error->", line)
+                p.apply_async(handle_dataset, args=(line,))
+            p.close()
+            p.join()
+            print("all done.")
 
 
 def test():
