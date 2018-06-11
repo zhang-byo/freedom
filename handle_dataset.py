@@ -5,6 +5,7 @@ import pickle as pkl
 import numpy as np
 from util import *
 from multiprocessing import Pool
+from scipy.sparse import csr_matrix
 
 # 路径前缀
 pre_path = "/home/ubuntu/disk/hdd_2/iie/dataset/"
@@ -26,7 +27,7 @@ def generate_pkl(content):
     else:
         new_content[0:MAX_NODE, 0:MAX_NODE] = g[0:MAX_NODE, 0:MAX_NODE]
         new_content[0:MAX_NODE, MAX_NODE:] = e[0:MAX_NODE, MAX_NODE:]
-    return new_content
+    return csr_matrix(new_content)
 
 
 def handle_line(input_pkl):
@@ -67,12 +68,20 @@ def main(input_file):
 
 
 def test():
-    handle_line("dataset/text+time_human")
+    # temp = handle_line("dataset/text+time_human")
+    # print(type(temp))
+    # print(temp.shape)
+    # print(temp)
+    # print(temp.todense())
+
+    # main("dataset/all_pkl")
+
     with open("dataset/text+time_human", "rb") as f:
         c = pkl.load(f)
         print(type(c))
         print(c.shape)
         print(c)
+        print(c.todense())
 
 
 if __name__ == "__main__":
