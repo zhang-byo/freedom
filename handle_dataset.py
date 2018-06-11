@@ -56,7 +56,7 @@ def handle_dataset(line):
 
 def main(input_file):
     if file_exist(input_file):
-        p = Pool(processes=64)
+        p = Pool(processes=32)
         with open(input_file, "r", encoding="utf-8") as f:
             for line in f:
                 line = pre_path + line.strip()
