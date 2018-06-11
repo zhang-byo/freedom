@@ -5,6 +5,8 @@ import pickle as pkl
 import numpy as np
 from util import *
 
+# 路径前缀
+pre_path = "/home/ubuntu/disk/hdd_2/iie/dataset/"
 # 定义最大节点数，小于该节点即进行填充0
 MAX_NODE = 1024
 # 特征的维度
@@ -47,21 +49,21 @@ def main(input_file):
     if file_exist(input_file):
         with open(input_file, "r", encoding="utf-8") as f:
             for line in f:
-                new_pkl = handle_line(line.strip())
-                if write_pkl(new_pkl, line.strip()):
-                    print("done->", line.strip())
+                line = pre_path + line.strip()
+                new_pkl = handle_line(line)
+                if write_pkl(new_pkl, line):
+                    print("done->", line)
                 else:
-                    print("error->", line.strip())
+                    print("error->", line)
 
 
 def test():
-    main("dataset/all_pkl")
-    # handle_line("dataset/text+time_human")
-    # with open("dataset/text+time_human", "rb") as f:
-    #     c = pkl.load(f)
-    #     print(type(c))
-    #     print(c.shape)
-    #     print(c)
+    handle_line("dataset/text+time_human")
+    with open("dataset/text+time_human", "rb") as f:
+        c = pkl.load(f)
+        print(type(c))
+        print(c.shape)
+        print(c)
 
 
 if __name__ == "__main__":
